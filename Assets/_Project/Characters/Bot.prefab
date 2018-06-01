@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33665153207568776}
   - component: {fileID: 23198318679388408}
   - component: {fileID: 65857107451293510}
-  m_Layer: 9
+  m_Layer: 2
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 136915154149861056}
   - component: {fileID: 114918465708100140}
   - component: {fileID: 54055544485546126}
-  m_Layer: 9
+  m_Layer: 2
   m_Name: Bot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

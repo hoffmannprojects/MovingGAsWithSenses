@@ -28,6 +28,7 @@ public class Brain : MonoBehaviour {
     private int DnaLength = 2;
     private bool isAlive = true;
     private bool canSeeGround = true;
+    private MeshRenderer[] meshRenderers;
 
     #region Public Methods
     public void Init ()
@@ -40,13 +41,24 @@ public class Brain : MonoBehaviour {
         TimeAlive = 0f;
         timeSpentWalking = 0f;
         isAlive = true;
-    } 
+    }
     #endregion
-	
-	// Update is called once per frame
-	void Update ()
+
+    private void Start ()
     {
-        if (!isAlive) return;
+        meshRenderers = GetComponentsInChildren<MeshRenderer>();
+    }
+    // Update is called once per frame
+    void Update ()
+    {
+        if (!isAlive)
+        {
+            foreach (var meshRenderer in meshRenderers)
+            {
+                meshRenderer.material.color = Color.gray;
+            }
+            return;
+        }
         CheckIfCanSeeGround();
         MoveBasedOnDna();
     }
