@@ -5,11 +5,18 @@ using UnityEngine;
 public class Brain : MonoBehaviour {
 
     #region Properties
+    public float TimeAlive
+    {
+        get { return timeAlive; }
+        private set { timeAlive = value; }
+    }
+
     public Dna Dna { get; private set; }
-    public float TimeAlive { get; private set; }
     #endregion
 
     [SerializeField] private GameObject eyes;
+    [SerializeField] private float timeAlive;
+    [SerializeField] private float timeSpentWaling;
 
     private int DnaLength = 2;
     private bool isAlive = true;
@@ -23,7 +30,8 @@ public class Brain : MonoBehaviour {
         // 1 = turn left.
         // 2 = turn right.
         Dna = new Dna(DnaLength, 3);
-        TimeAlive = 0;
+        TimeAlive = 0f;
+        timeSpentWaling = 0f;
         isAlive = true;
     } 
     #endregion
@@ -46,6 +54,7 @@ public class Brain : MonoBehaviour {
             if (Dna.Genes[0] == 0)
             {
                 move = 1;
+                timeSpentWaling += Time.deltaTime;
             }
             else if (Dna.Genes[0] == 1)
             {
@@ -61,6 +70,7 @@ public class Brain : MonoBehaviour {
             if (Dna.Genes[1] == 0)
             {
                 move = 1;
+                timeSpentWaling += Time.deltaTime;
             }
             else if (Dna.Genes[1] == 1)
             {
@@ -78,7 +88,7 @@ public class Brain : MonoBehaviour {
 
     private void CheckIfCanSeeGround ()
     {
-        Debug.DrawRay(eyes.transform.position, eyes.transform.forward * 10, Color.red, 10f);
+        Debug.DrawRay(eyes.transform.position, eyes.transform.forward * 10, Color.red, 2f);
         canSeeGround = false;
 
         RaycastHit hit;
