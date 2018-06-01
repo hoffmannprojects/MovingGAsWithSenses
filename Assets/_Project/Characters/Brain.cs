@@ -4,17 +4,28 @@ using UnityEngine;
 
 public class Brain : MonoBehaviour {
 
+    #region Properties
+    public Dna Dna { get; private set; }
+    public float TimeAlive { get; private set; }
+    #endregion
+
     private int DnaLength = 2;
-    private float timeAlive;
-    private Dna dna;
     private GameObject eyes;
     private bool isAlive = true;
     private bool canSeeGround = true;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    #region Public Methods
+    public void Init ()
+    {
+        // Initialize Dna.
+        // 0 = move forward.
+        // 1 = turn left.
+        // 2 = turn right.
+        Dna = new Dna(DnaLength, 3);
+        TimeAlive = 0;
+        isAlive = true;
+    } 
+    #endregion
 	
 	// Update is called once per frame
 	void Update ()
@@ -31,30 +42,30 @@ public class Brain : MonoBehaviour {
 
         if (canSeeGround)
         {
-            if (dna.Genes[0] == 0)
+            if (Dna.Genes[0] == 0)
             {
                 move = 1;
             }
-            else if (dna.Genes[0] == 1)
+            else if (Dna.Genes[0] == 1)
             {
                 turn = -90;
             }
-            else if (dna.Genes[0] == 2)
+            else if (Dna.Genes[0] == 2)
             {
                 turn = 90;
             }
         }
         else
         {
-            if (dna.Genes[1] == 0)
+            if (Dna.Genes[1] == 0)
             {
                 move = 1;
             }
-            else if (dna.Genes[1] == 1)
+            else if (Dna.Genes[1] == 1)
             {
                 turn = -90;
             }
-            else if (dna.Genes[1] == 2)
+            else if (Dna.Genes[1] == 2)
             {
                 turn = 90;
             }
@@ -77,7 +88,7 @@ public class Brain : MonoBehaviour {
                 canSeeGround = true;
             }
         }
-        //TODO: timeAlive =
+        TimeAlive = PopulationManager.TimeElapsed;
     }
 
     private void OnCollisionEnter (Collision collision)
@@ -88,14 +99,4 @@ public class Brain : MonoBehaviour {
         }
     }
 
-    private void Init ()
-    {
-        // Initialize Dna.
-        // 0 = move forward.
-        // 1 = turn left.
-        // 2 = turn right.
-        dna = new Dna(DnaLength, 3);
-        timeAlive = 0;
-        isAlive = true;
-    }
 }
