@@ -11,12 +11,19 @@ public class Brain : MonoBehaviour {
         private set { timeAlive = value; }
     }
 
+    public float TimeSpentWalking
+    {
+        get { return timeSpentWalking; }
+        private set { timeSpentWalking = value; }
+    }
+
     public Dna Dna { get; private set; }
     #endregion
 
     [SerializeField] private GameObject eyes;
     [SerializeField] private float timeAlive;
-    [SerializeField] private float timeSpentWaling;
+    [SerializeField] private float timeSpentWalking;
+    [SerializeField] private float debugRaycastLifetime = 1f;
 
     private int DnaLength = 2;
     private bool isAlive = true;
@@ -31,7 +38,7 @@ public class Brain : MonoBehaviour {
         // 2 = turn right.
         Dna = new Dna(DnaLength, 3);
         TimeAlive = 0f;
-        timeSpentWaling = 0f;
+        timeSpentWalking = 0f;
         isAlive = true;
     } 
     #endregion
@@ -44,6 +51,22 @@ public class Brain : MonoBehaviour {
         MoveBasedOnDna();
     }
 
+    private void CheckIfCanSeeGround ()
+    {
+        Debug.DrawRay(eyes.transform.position, eyes.transform.forward * 10, Color.red, debugRaycastLifetime);
+        canSeeGround = false;
+
+        RaycastHit hit;
+        if (Physics.Raycast(eyes.transform.position, eyes.transform.forward * 10, out hit))
+        {
+            if (hit.collider.gameObject.tag == "platform")
+            {
+                canSeeGround = true;
+            }
+        }
+        TimeAlive = PopulationManager.TimeElapsed;
+    }
+
     private void MoveBasedOnDna ()
     {
         float turn = 0;
@@ -54,7 +77,7 @@ public class Brain : MonoBehaviour {
             if (Dna.Genes[0] == 0)
             {
                 move = 1;
-                timeSpentWaling += Time.deltaTime;
+                timeSpentWalking += Time.deltaTime;
             }
             else if (Dna.Genes[0] == 1)
             {
@@ -70,7 +93,7 @@ public class Brain : MonoBehaviour {
             if (Dna.Genes[1] == 0)
             {
                 move = 1;
-                timeSpentWaling += Time.deltaTime;
+                timeSpentWalking += Time.deltaTime;
             }
             else if (Dna.Genes[1] == 1)
             {
@@ -84,22 +107,6 @@ public class Brain : MonoBehaviour {
 
         this.transform.Translate(0, 0, move * 0.1f);
         this.transform.Rotate(0, turn, 0);
-    }
-
-    private void CheckIfCanSeeGround ()
-    {
-        Debug.DrawRay(eyes.transform.position, eyes.transform.forward * 10, Color.red, 2f);
-        canSeeGround = false;
-
-        RaycastHit hit;
-        if (Physics.Raycast(eyes.transform.position, eyes.transform.forward * 10, out hit))
-        {
-            if (hit.collider.gameObject.tag == "platform")
-            {
-                canSeeGround = true;
-            }
-        }
-        TimeAlive = PopulationManager.TimeElapsed;
     }
 
     private void OnCollisionEnter (Collision collision)
