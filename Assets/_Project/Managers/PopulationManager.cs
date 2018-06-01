@@ -9,10 +9,11 @@ public class PopulationManager : MonoBehaviour
     public static float TimeElapsed { get; private set; } 
     #endregion
 
-    private GameObject botPrefab;
-    private int populationSize = 50;
+    [SerializeField] private GameObject botPrefab;
+    [SerializeField] private int populationSize = 50;
+    [SerializeField] private float trialTime = 5;
+
     private List<GameObject> population = new List<GameObject>();
-    private float trialTime = 5;
     private int generation = 1;
 
     private GUIStyle guiStyle = new GUIStyle();

@@ -9,8 +9,9 @@ public class Brain : MonoBehaviour {
     public float TimeAlive { get; private set; }
     #endregion
 
+    [SerializeField] private GameObject eyes;
+
     private int DnaLength = 2;
-    private GameObject eyes;
     private bool isAlive = true;
     private bool canSeeGround = true;
 
