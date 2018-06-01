@@ -24,16 +24,6 @@ public class Dna {
     }
     #endregion
 
-    // Use this for initialization
-    void Start () {
-
-    }
-
-    // Update is called once per frame
-    void Update () {
-
-    }
-
     #region Public Methods
     public void SetRandom ()
     {
