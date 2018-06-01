@@ -20,6 +20,7 @@ public class Brain : MonoBehaviour {
     public Dna Dna { get; private set; }
     #endregion
 
+    [SerializeField] private GameObject ethanPrefab;
     [SerializeField] private GameObject eyes;
     [SerializeField] private float timeAlive;
     [SerializeField] private float timeSpentWalking;
@@ -29,6 +30,7 @@ public class Brain : MonoBehaviour {
     private bool isAlive = true;
     private bool canSeeGround = true;
     private MeshRenderer[] meshRenderers;
+    private GameObject ethan;
 
     #region Public Methods
     public void Init ()
@@ -41,6 +43,9 @@ public class Brain : MonoBehaviour {
         TimeAlive = 0f;
         timeSpentWalking = 0f;
         isAlive = true;
+
+        ethan = Instantiate(ethanPrefab, this.transform.position, Quaternion.identity);
+        ethan.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = this.transform;
     }
     #endregion
 
@@ -129,4 +134,8 @@ public class Brain : MonoBehaviour {
         }
     }
 
+    private void OnDestroy ()
+    {
+        Destroy(ethan);
+    }
 }

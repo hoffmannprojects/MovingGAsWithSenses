@@ -25,6 +25,7 @@ public class Dna {
     #endregion
 
     #region Public Methods
+
     public void SetRandom ()
     {
         genes.Clear();
